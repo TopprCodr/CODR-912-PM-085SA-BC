@@ -31,6 +31,8 @@ Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
 
+var bodyStyle = { fillStyle: '#222' };
+
 // Creating edges
 var wall1 = Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: bodyStyle }),
     wall2 = Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: bodyStyle }),
