@@ -31,46 +31,18 @@ Render.run(render);
 var runner = Runner.create();
 Runner.run(runner, engine);
 
+// Creating edges
+var wall1 = Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: bodyStyle }),
+    wall2 = Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: bodyStyle }),
+    wall3 = Bodies.rectangle(800, 300, 50, 600, { isStatic: true, render: bodyStyle }),
+    wall4 = Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: bodyStyle });
 
-
-
-/* 
- 
-add events here
-
-*/
-
-var bodyStyle = { fillStyle: '#222' };
-
-// scene code
-Composite.add(world, [
-Bodies.rectangle(400, 0, 800, 50, { isStatic: true, render: bodyStyle }),
-Bodies.rectangle(400, 600, 800, 50, { isStatic: true, render: bodyStyle }),
-Bodies.rectangle(800, 300, 50, 600, { isStatic: true, render: bodyStyle }),
-Bodies.rectangle(0, 300, 50, 600, { isStatic: true, render: bodyStyle })
-]);
-
+//stack of circular bodies
 var stack = Composites.stack(70, 100, 9, 4, 50, 50, function(x, y) {
-return Bodies.circle(x, y, 15, { restitution: 1, render: bodyStyle });
+    return Bodies.circle(x, y, 15, { restitution: 1, render: bodyStyle });
 });
 
-Composite.add(world, stack);
+//Adding them to the world
+Composite.add(world, [wall1, wall2, wall3, wall4, stack]);
 
-
-
-// add mouse control
-var mouse = Mouse.create(render.canvas),
-mouseConstraint = MouseConstraint.create(engine, {
-    mouse: mouse,
-    constraint: {
-        stiffness: 0.2,
-        render: {
-            visible: false
-        }
-    }
-});
-
-Composite.add(world, mouseConstraint);
-
-// keep the mouse in sync with rendering
-render.mouse = mouse;
+// using collisionStart event on an engine
